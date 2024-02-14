@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0.5;
+        }
+        .body{
+            background-color: #eeeee4;
+        }
+        .layout{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* background-color: blue; */
+            margin-top: 30vh;
+        }
+        .login{
+            width: max-content;
+            height: min-content;
+            padding: 1rem;
+        }
+        button{
+            border-radius: 8px;
+            border: none;
+            background-color: #e28743;
+            height: 2rem;
+            width: 5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="login" style="border-radius: 8px;background-color: #eab676;">
+            <h1>Signup</h1>
+            <div style="display: flex;">
+                <form method="POST" action="/user/signup">
+                    <div style="margin: 1rem;">
+                        <label for="fullName">FullName : </label>
+                        <input type="text" required name="name" style="height: 1.5rem;" placeholder="FullName">
+                    </div>
+                    <div style="margin: 1rem;">
+                        <label for="email">Email : </label>
+                        <input type="email" required name="email" style="height: 1.5rem;" placeholder="Email">
+                    </div>
+                    <div style="margin: 1rem;">
+                        <label for="password">Password : </label>
+                        <input type="text" required name="password" style="height: 1.5rem;" placeholder="Password">
+                    </div>
+                    <button type="submit" style="margin-left: 6rem;">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

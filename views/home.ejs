@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="/static/css/style.css"> -->
+    <title>Home Page</title>
+    <style>
+        .bigContainer{
+            background-color:#eeeee4;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style-type: none;
+            /* padding: 15px; */
+            overflow: hidden;
+            position: fixed;
+            margin: 0;
+            padding: 10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background-color: #25a6be;
+        }
+        li{
+            float: left;
+        }
+         .heading{
+            padding-left: 7vw;
+            font-size: 32px;
+        }
+        .header{
+            float: right;
+            padding-right: 7vw;
+        } 
+        .container{
+            margin-left: 17vw;
+            margin-right: 17vw;
+            margin-top: 7.9vh;
+            padding-top: 12vh;
+            height: 80vh;
+            /* border: 1px solid red; */
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .form1{
+            display: flex;
+            gap: 10vw;
+            justify-content: center;
+            overflow-x: scroll;
+        }
+        .form1::-webkit-scrollbar {
+            display: none;
+        }
+        .form2{
+            display: flex;
+            gap: 10vw;
+            justify-content: center;
+            overflow-x: scroll;
+            margin-top: 7%;
+        }
+        .form2::-webkit-scrollbar {
+            display: none;
+        }   
+        .History{
+            /* border: 2px solid black; */
+            background-color: #eec591;
+            margin-top: 0;
+            overflow-x: scroll;
+            height: 40%;
+            padding:5px;
+            left:5px;
+            bottom:5px;
+            right:5px;
+            position:absolute;
+            border-radius: 8px;
+            box-shadow: 1px 1px 1px 1px;
+            /* box-shadow: none; */
+        }  
+        .History::-webkit-scrollbar {
+            display: none;
+        }   
+        input{
+            height: 1.7rem;
+            margin-top: 0.5rem;
+        }
+        button{
+            border-radius: 8px;
+            border: none;
+            background-color: #e28743;
+        }
+        </style>
+</head>
+<body>
+    <div class="bigContainer">
+        <nav>
+            <ul>
+                <li class="heading">URL Shortener</li>
+                <li class="header">
+                    <% if (locals.url1) { %>
+                        <form method="POST" action="/">
+                            <button type="submit" style="width: 5rem; height: 2rem;">Log Out</button>
+                        </form>            
+                    <% } else { %>
+                        <form method="POST" action="/log">
+                            <button type="submit" style="width: 5rem; height: 2rem;">Log In</button>
+                        </form> 
+                    <% } %>                   
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <div class="form1">
+                    <form method="POST" action="/url" style="width: 30%;">
+                        <label>Enter Your Original Url : </label>
+                        <input type="text" name="redirectURL" placeholder="https://example.com">
+                        <button class="btn" type="submit" style="width: 5rem; height: 2rem;">Generate</button>
+                    </form>
+                    <form method="POST" action="/url/search"style="width: 30%;">
+                        <label>Enter Your Original Url : </label>
+                        <input type="text" name="redirectURL" placeholder="https://example.com">
+                        <button class="btn" type="submit" style="width: 5rem; height: 2rem;">Search</button>         
+                    </form>
+            </div>
+            <div class="form2">
+                <form method="POST" action="/url/update"style="width: 30%;">
+                    <label>Enter Your Original Url : </label>
+                    <input type="text" name="redirectURL" placeholder="https://example.com">
+                    <button class="btn" type="submit" style="width: 5rem; height: 2rem;">Update</button>         
+                </form>
+                <form method="POST" action="/url/remove"style="width: 30%;">
+                    <label>Enter Your Original Url : </label>
+                    <input type="text" name="redirectURL" placeholder="https://example.com">
+                    <button class="btn" type="submit" style="width: 5rem; height: 2rem;" >Delete</button>         
+                </form>
+            </div>
+            <div class="History">
+                <% if (locals.id) { %>
+                    <% if (locals.id=="-1") { %>
+                     <h2>Invalid URL</h2>
+                     <% } else if (locals.id=="0") { %>
+                        <h2>You are already generated this Url</h2>
+                    <% } else{ %>
+                    <h2>Searched URL : http://localhost:8080/url/analytics/<%= id %></h2>
+                    <% } %>
+                <% } %>
+                <% if (locals.url1) { %>
+                        <table>
+                            <thead>
+                                <th style="padding: 0 4vw;">ShortId</th>
+                                <th style="padding: 0 4vw;">redirectURL</th>
+                                <th style="padding: 0 4vw;">Clicks</th>
+                                <th style="padding: 0 4vw;">GeneratedURL</th>
+                            </thead>
+                            <tbody>
+                                <% url1.forEach(element => { %>
+                                    <tr>
+                                        <td style="padding: 0 4vw;"><%= element.shortId %></td>
+                                        <td style="padding: 0 4vw"><%= element.redirectURL %></td>
+                                        <td style="padding: 0 4vw"><%= element.visitHistory.length-1 %></td>
+                                        <td style="padding: 0 4vw;">http://localhost:8080/url/analytics/<%= element.shortId %> %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                          </table>    
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="/static/js/app.js"></script> -->
+</body>
+</html>
