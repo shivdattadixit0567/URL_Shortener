@@ -7,7 +7,7 @@ async function handleGenerateNewShortURL(req, res) {
   const body = req.body;
   const id = req.user._id;
   const prevUrl = body.redirectURL;
-  if (!body.redirectURL) return res.status(400).render("home",{
+  if (!body.redirectURL) return res.status(400).render("index",{
     id : "-1",
   })
   const shortID = new shortid(10).rnd();
@@ -21,12 +21,12 @@ async function handleGenerateNewShortURL(req, res) {
    urls.createdBy = id;
    await urls.save();
   }else{
-    return res.render("home",{
+    return res.render("index",{
       id : "0"
     })
   }
   
-  return res.render("home",{
+  return res.render("index",{
     id:shortID,
   });
 }
@@ -45,10 +45,10 @@ async function searchUrl(req,res){
   const body = req.body;
   const url = body.redirectURL;
   const result = await URL.findOne({createdBy : req.user._id , redirectURL:url});
-  if(!result) return res.render("home",{
+  if(!result) return res.render("index",{
     id : "-1"
   })
-    return res.render("home",{
+    return res.render("index",{
       id : result.shortId,
     })
 }
@@ -58,7 +58,7 @@ async function handleUpdate(req,res){
   const newUrl = req.body.redirectURL;
   const date = Date.now();
   const result = await URL.findOneAndUpdate({createdBy:req.user._id,redirectURL:newUrl},{shortId:shortID},{visitHistory:date},{new:true});
-  if(!result) return res.render("home",{
+  if(!result) return res.render("index",{
     id : "-1"
   })
   result.save();
@@ -68,7 +68,7 @@ async function handleUpdate(req,res){
 async function handleDelete(req,res){
   const url = req.body.redirectURL;
   const result = await URL.findOne({createdBy:req.user._id,redirectURL:url});
-  if(!result) return res.render("home",{
+  if(!result) return res.render("index",{
     id : "-1"
   })
   const newResult = await URL.findOneAndDelete({redirectURL:url});

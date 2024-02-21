@@ -6,9 +6,9 @@ router.get("/",async(req,res)=>{
     if(req.user){
         const id = req.user?req.user._id:'0';
         const allUrls = await URL.find({createdBy : id});
-      return res.render("home",{url1:allUrls});
+      return res.render("index",{url1:allUrls});
     }else{
-        return res.render("home",{url1:null});
+        return res.render("index",{url1:null});
     }
 })
 
