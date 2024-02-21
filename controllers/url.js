@@ -75,10 +75,18 @@ async function handleDelete(req,res){
   res.redirect("/");
 }
 
+async function allHandleDelete(req,res){
+  const id = req.user._id;
+  const all = await URL.deleteMany({createdBy:id});
+  console.log(all);
+  return res.redirect("/");
+}
+
 module.exports = {
   handleGenerateNewShortURL,
   handleGetAnalytics,
   handleDelete,
   handleUpdate,
-  searchUrl
+  searchUrl,
+  allHandleDelete
 };

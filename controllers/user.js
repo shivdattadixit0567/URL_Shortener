@@ -17,7 +17,7 @@ async function handleUserSignup(req,res){
         await User.save();
         return res.redirect("/login");
     }else{
-        res.send(`You are already registered. Please login`);
+        return res.send("You are already registered. Please login")
     }
 }
 
@@ -30,10 +30,10 @@ async function handleUserLogin(req,res){
     const hashedPassword = createHmac('sha256', password)
                .update('I love cupcakes')
                .digest('hex');
-    console.log(hashedPassword);
+    // console.log(hashedPassword);
  
     const result = await USER.findOne({email:email,password:hashedPassword});
-    console.log(result);
+    // console.log(result);
     if(!result){
         return res.render("login",{
             error : `Invalid Username or Password`
